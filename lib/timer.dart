@@ -11,19 +11,21 @@ class Timer extends StatefulWidget {
 
 class _TimerState extends State<Timer> {
   List<int> numbers = [];
+  bool showTitle = true;
 
-  void onClicked() {
+  void toggleTitle() {
     setState(() {
-      numbers.add(numbers.length);
+      showTitle = !showTitle;
     });
-    print(numbers);
   }
 
   @override
   Widget build(BuildContext context) {
+    print('_TimerState build');
+
     return MaterialApp(
       theme: ThemeData(
-        textTheme: TextTheme(
+        textTheme: const TextTheme(
           titleLarge: TextStyle(
             color: Colors.red,
           ),
@@ -35,12 +37,12 @@ class _TimerState extends State<Timer> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const MyLargeTitle(),
+              showTitle ? const MyLargeTitle() : const Text('Nothing'),
               for (var n in numbers) Text('$n'),
               IconButton(
                 iconSize: 40,
-                onPressed: onClicked,
-                icon: const Icon(Icons.add_box_rounded),
+                onPressed: toggleTitle,
+                icon: const Icon(Icons.remove_red_eye),
               )
             ],
           ),
@@ -50,13 +52,31 @@ class _TimerState extends State<Timer> {
   }
 }
 
-class MyLargeTitle extends StatelessWidget {
+class MyLargeTitle extends StatefulWidget {
   const MyLargeTitle({
     super.key,
   });
 
   @override
+  State<MyLargeTitle> createState() => _MyLargeTitleState();
+}
+
+class _MyLargeTitleState extends State<MyLargeTitle> {
+  @override
+  void initState() {
+    super.initState();
+    print('MyLargeTitle initState!');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print('MyLargeTitle dispose!');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('MyLargeTitle build');
     return Text(
       'My Large Title',
       style: TextStyle(
