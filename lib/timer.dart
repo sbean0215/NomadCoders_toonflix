@@ -13,7 +13,9 @@ class _TimerState extends State<Timer> {
   int counter = 0;
 
   void onClicked() {
-    counter = counter + 1;
+    setState(() {
+      counter = counter + 1;
+    });
   }
 
   @override
