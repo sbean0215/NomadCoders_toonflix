@@ -108,21 +108,26 @@ class App extends StatelessWidget {
                 height: 20,
               ),
               Container(
+                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
                     color: const Color(0xFF1F2123),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   padding: const EdgeInsets.all(30.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Euro',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.w600)),
+                          const Text(
+                            'Euro',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 32,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
@@ -148,7 +153,17 @@ class App extends StatelessWidget {
                             ],
                           )
                         ],
-                      )
+                      ),
+                      Transform.scale(
+                          scale: 2.2,
+                          child: Transform.translate(
+                            offset: const Offset(-5, 12),
+                            child: const Icon(
+                              Icons.euro_rounded,
+                              color: Colors.white,
+                              size: 88,
+                            ),
+                          )),
                     ],
                   ))
             ],
