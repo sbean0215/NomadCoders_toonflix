@@ -10,12 +10,13 @@ class Timer extends StatefulWidget {
 }
 
 class _TimerState extends State<Timer> {
-  int counter = 0;
+  List<int> numbers = [];
 
   void onClicked() {
     setState(() {
-      counter = counter + 1;
+      numbers.add(numbers.length);
     });
+    print(numbers);
   }
 
   @override
@@ -31,10 +32,7 @@ class _TimerState extends State<Timer> {
                 'Click Count',
                 style: TextStyle(fontSize: 30),
               ),
-              Text(
-                '$counter',
-                style: const TextStyle(fontSize: 30),
-              ),
+              for (var n in numbers) Text('$n'),
               IconButton(
                 iconSize: 40,
                 onPressed: onClicked,
