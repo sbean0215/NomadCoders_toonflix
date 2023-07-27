@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/toon/services/ApiService.dart';
 
 class DetailScreen extends StatelessWidget {
   final String title, thumb, id;
@@ -10,8 +11,17 @@ class DetailScreen extends StatelessWidget {
     required this.id,
   });
 
+  void test() async {
+    print((await ApiService.getWebtoonById(id)));
+    for (var element in (await ApiService.getLatestEpisodesById(id))) {
+      print(element);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    test();
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
