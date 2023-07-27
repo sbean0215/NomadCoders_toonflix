@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/toon/screen/home_screen.dart';
+import 'package:toonflix/toon/services/ApiService.dart';
 
 void main() {
-  runApp(App());
+  ApiService().getTodaysToons();
+  runApp(const App());
 }
 
 class App extends StatelessWidget {
