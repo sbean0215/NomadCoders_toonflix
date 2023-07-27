@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/toon/model/webtoon_model.dart';
 import 'package:toonflix/toon/services/ApiService.dart';
-import 'package:toonflix/toon/widgets/webtoon.dart';
+import 'package:toonflix/toon/widgets/webtoon_widget.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
