@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toonflix/toon/model/webtoon_episode_model.dart';
 import 'package:toonflix/toon/services/ApiService.dart';
 
@@ -20,14 +21,46 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  static const String _likedToons = 'likedToons';
+
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences prefs;
+  bool isLiked = false;
 
   @override
   void initState() {
     super.initState();
     webtoon = ApiService.getWebtoonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPref();
+  }
+
+  Future initPref() async {
+    prefs = await SharedPreferences.getInstance();
+    final likedToons = prefs.getStringList(_likedToons);
+    if (likedToons != null) {
+      setState(() {
+        isLiked = likedToons.contains(widget.id);
+      });
+    } else {
+      await prefs.setStringList(_likedToons, []);
+    }
+  }
+
+  void onHartTab() async {
+    final likedToons = prefs.getStringList(_likedToons);
+    if (likedToons != null) {
+      if (isLiked) {
+        likedToons.remove(widget.id);
+      } else {
+        likedToons.add(widget.id);
+      }
+      await prefs.setStringList(_likedToons, likedToons);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
   }
 
   @override
@@ -38,6 +71,14 @@ class _DetailScreenState extends State<DetailScreen> {
           elevation: 2,
           backgroundColor: Colors.white,
           foregroundColor: Colors.green,
+          actions: [
+            IconButton(
+              onPressed: onHartTab,
+              // icon: Icon(Icons.favorite_rounded),
+              icon: Icon(
+                  isLiked ? Icons.favorite_rounded : Icons.favorite_outline),
+            ),
+          ],
           title: Text(
             widget.title,
             style: const TextStyle(fontSize: 24),
